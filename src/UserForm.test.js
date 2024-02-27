@@ -25,6 +25,7 @@ test("it calls onUserAdd when the form is submitted", () => {
   
   render(<UserForm onUserAdd={callback} />);
 
+  // assume the form only has 2 fields ordered by name then email
   const [nameInput, emailInput] = screen.getAllByRole("textbox");
 
   // Simulate typing in a name
@@ -45,15 +46,16 @@ test("it calls onUserAdd when the form is submitted", () => {
 });
 */
 
-
 // use mock function
 test("it calls onUserAdd when the form is submitted", () => {
   const mock = jest.fn();
 
   render(<UserForm onUserAdd={mock} />);
 
-  const [nameInput, emailInput] = screen.getAllByRole("textbox");
-
+  // Better appoach
+  const nameInput = screen.getByRole("textbox", { name: /name/i });
+  const emailInput = screen.getByRole("textbox", { name: /email/i });
+  
   // Simulate typing in a name
   user.click(nameInput);
   user.keyboard("jane");
