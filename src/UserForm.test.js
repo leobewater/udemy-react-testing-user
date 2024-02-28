@@ -55,7 +55,7 @@ test("it calls onUserAdd when the form is submitted", () => {
   // Better appoach
   const nameInput = screen.getByRole("textbox", { name: /name/i });
   const emailInput = screen.getByRole("textbox", { name: /email/i });
-  
+
   // Simulate typing in a name
   user.click(nameInput);
   user.keyboard("jane");
@@ -71,4 +71,24 @@ test("it calls onUserAdd when the form is submitted", () => {
   // Assertion to make sure 'onUserAdd' gets called with email/name
   expect(mock).toHaveBeenCalled();
   expect(mock).toHaveBeenCalledWith({ name: "jane", email: "jane@jane.com" });
+});
+
+test("empties the two inputs when form is submitted", async() => {
+  render(<UserForm onUserAdd={() => {}} />);
+
+  const nameInput = screen.getByRole("textbox", {
+    name: /name/i,
+  });
+  const emailInput = screen.getByRole("textbox", { name: /email/i });
+  const button = screen.getByRole("button");
+
+  await user.click(nameInput);
+  await user.keyboard("jane");
+  await user.click(emailInput);
+  await user.keyboard("jane@jane.com");
+
+  await user.click(button);
+
+  expect(nameInput).toHaveValue('');
+  expect(emailInput).toHaveValue('');
 });

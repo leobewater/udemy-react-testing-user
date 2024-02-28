@@ -8,17 +8,28 @@ function UserForm({ onUserAdd }) {
     event.preventDefault();
 
     onUserAdd({ name, email });
+
+    setEmail("");
+    setName("");
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="name">Name</label>
-        <input id="name" value={name} onChange={(e) => setName(e.target.value)} />
+        <input
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
       </div>
       <div>
         <label htmlFor="email">Email</label>
-        <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </div>
       <button type="submit">Add User</button>
     </form>
